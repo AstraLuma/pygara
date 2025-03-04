@@ -1,0 +1,19 @@
+[project]
+name = "pygara"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Jamie Bliss",email = "jamie@ivyleav.es"}
+]
+readme = "README.md"
+# plyvel does not have wheels for 3.13 yet
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "plyvel (>=1.5.1,<2.0.0)",
+    "cbor2 (>=5.6.5,<6.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
