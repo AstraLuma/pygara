@@ -172,7 +172,7 @@ class TDict(collections.abc.Mapping):
 
     def __repr__(self):
         if isinstance(self._db, plyvel._plyvel.Snapshot):
-            dbstr = f"snapshot@..."
+            dbstr = "snapshot@..."
         elif isinstance(self._db, plyvel.DB):
             dbstr = f"db@{self._db.name!r}"
         else:
@@ -322,7 +322,7 @@ class TangaraDB:
 
     def get_track(self, track_id: TrackId | str) -> TrackData:
         db = self._db.snapshot()
-        if isinstance(track, str):
+        if isinstance(track_id, str):
             # path
             track_id: TrackId = db._db[PathKey(track_id)]
 

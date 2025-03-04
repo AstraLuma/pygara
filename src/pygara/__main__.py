@@ -1,4 +1,4 @@
-from pygara import *
+from pygara import TangaraDB
 
 db = TangaraDB("/media/astraluma/9EE9-1BAD/.tangara-db")
 for track in db.iter_tracks():
