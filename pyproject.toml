@@ -1,11 +1,11 @@
 [project]
 name = "pygara"
-version = "0.1.0"
-description = ""
+description = "Python API for the gay ipod"
 authors = [
     {name = "Jamie Bliss",email = "jamie@ivyleav.es"}
 ]
 readme = "README.md"
+dynamic = ["version"]
 # plyvel does not have wheels for 3.13 yet
 requires-python = ">=3.12,<3.13"
 dependencies = [
@@ -14,6 +14,21 @@ dependencies = [
 ]
 
 
+[tool.poetry]
+requires-poetry = ">=2.0"
+version = "0.0.0"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
+
+
+[tool.poetry-dynamic-versioning]
+enable = true
+dirty = true
+bump = true
+
+
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
