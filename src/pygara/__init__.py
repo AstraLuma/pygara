@@ -223,9 +223,14 @@ class TDict(collections.abc.Mapping):
         return type(self)(self._db.snapshot())
 
     def items_by_prefix(
-        self, prefix: Prefix
+        self,
+        prefix: Prefix | bytes,
     ) -> typing.Iterator[tuple[Key, typing.Any]]:
-        start = bytes(prefix)
+        if isinstance(prefix, Prefix):
+            start = bytes(prefix) + FIELD_SEPEARATOR
+        else:
+            start = prefix
+        assert start[-1] != 0xFF
         stop = start[:-1] + bytes([start[-1] + 1])
         yield from self._iterator(
             start=start, include_start=True, stop=stop, include_stop=False
