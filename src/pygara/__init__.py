@@ -17,7 +17,10 @@ def _decoder(data: bytes):
 
 
 def decode_cbor_uint(data: bytes) -> int:
-    return _decoder(data).decode()
+    try:
+        return _decoder(data).decode()
+    except cbor2.CBORDecodeError as e:
+        raise ValueError("Invalid CBOR data for uint") from e
 
 
 class Key[V](typing.Protocol):
@@ -49,10 +52,13 @@ class DataKey:
 
     @classmethod
     def from_data(cls, data: bytes):
-        # print(f"{data=}")
-        # data is a cbor uint
-        return cls(track_id=cbor2.loads(data))
-
+        try:
+            # print(f"{data=}")
+            # data is a cbor uint
+            return cls(track_id=cbor2.loads(data))
+        except cbor2.CBORDecodeError:
+            raise ValueError("Invalid DataKey CBOR data")
+            
     @staticmethod
     def decode_value(data: bytes):
         return cbor2.loads(data)
