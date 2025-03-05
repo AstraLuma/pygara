@@ -310,15 +310,15 @@ class TrackData:
         # 5-10: minutes (0-59)
         # 11-15: hours (0-23)
         # This aligns with http://elm-chan.org/fsw/ff/doc/sfileinfo.html
-        d = (self.modified_at_date & 0b00000000_00011111) >> 0
-        m = (self.modified_at_date & 0b00000001_11100000) >> 5
-        y = (self.modified_at_date & 0b11111110_00000000) >> 9
+        d = (self.modified_at_date & 0b00000000_00011111)  # Day: bits 0-4
+        m = (self.modified_at_date & 0b00000001_11100000) >> 5  # Month: bits 5-8
+        y = (self.modified_at_date >> 9) + 1980  # Year: bits 9-15, offset from 1980
 
-        s = (self.modified_at_time & 0b00000000_00011111) >> 0
-        n = (self.modified_at_date & 0b00000111_11100000) >> 5
-        h = (self.modified_at_date & 0b11111000_00000000) >> 11
+        s = (self.modified_at_time & 0b00000000_00011111) * 2  # Seconds/2: bits 0-4
+        n = (self.modified_at_time & 0b00000111_11100000) >> 5  # Minutes: bits 5-10
+        h = (self.modified_at_time >> 11)  # Hours: bits 11-15
 
-        return datetime.datetime(y + 1980, m, d, h, n, s * 2)
+    return datetime.datetime(y, m, d, h, n, s)
 
 
 class TangaraDB:
