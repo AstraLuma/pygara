@@ -324,7 +324,7 @@ class TrackData:
         n = (self.modified_at_time & 0b00000111_11100000) >> 5  # Minutes: bits 5-10
         h = (self.modified_at_time >> 11)  # Hours: bits 11-15
 
-    return datetime.datetime(y, m, d, h, n, s)
+        return datetime.datetime(y, m, d, h, n, s)
 
 
 class TangaraDB:
