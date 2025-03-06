@@ -56,8 +56,8 @@ class DataKey:
             # print(f"{data=}")
             # data is a cbor uint
             return cls(track_id=cbor2.loads(data))
-        except cbor2.CBORDecodeError:
-            raise ValueError("Invalid DataKey CBOR data")
+        except cbor2.CBORDecodeError as e:
+            raise ValueError("Invalid DataKey CBOR data") from e
             
     @staticmethod
     def decode_value(data: bytes):
